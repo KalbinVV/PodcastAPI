@@ -1,0 +1,22 @@
+version: '3.2'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: db
+    ports:
+      - 5432:5432
+
+  podcast-api:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    image: podcast-api
+    ports:
+      - 8000:8000
+    links:
+      - db
